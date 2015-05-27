@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.lukas81298.mcclient.MCClient;
 import me.lukas81298.mcclient.packets.Packet;
 import me.lukas81298.mcclient.packets.PacketDeserializer;
 import me.lukas81298.mcclient.packets.ProtocolState;
 import me.lukas81298.mcclient.packets.play.server.PacketServerAnimation;
 import me.lukas81298.mcclient.packets.play.server.PacketServerChangeGameState;
+import me.lukas81298.mcclient.packets.play.server.PacketServerChat;
 import me.lukas81298.mcclient.packets.play.server.PacketServerDifficulty;
 import me.lukas81298.mcclient.packets.play.server.PacketServerEntityEquipment;
 import me.lukas81298.mcclient.packets.play.server.PacketServerHeldItemChange;
 import me.lukas81298.mcclient.packets.play.server.PacketServerJoin;
 import me.lukas81298.mcclient.packets.play.server.PacketServerKeepAlive;
+import me.lukas81298.mcclient.packets.play.server.PacketServerPlayerAbilities;
+import me.lukas81298.mcclient.packets.play.server.PacketServerPluginMessage;
 import me.lukas81298.mcclient.packets.play.server.PacketServerRespawn;
 import me.lukas81298.mcclient.packets.play.server.PacketServerSoundEffect;
 import me.lukas81298.mcclient.packets.play.server.PacketServerSpawnGlobalEntity;
@@ -45,21 +49,22 @@ public class PacketHandlerPlay implements PacketHandler {
     
     public PacketHandlerPlay() {
 	this.register(0x0, PacketServerKeepAlive.class);
-	this.register(0x1, PacketServerJoin.class);
-	this.register(0x3, PacketServerTimeUpdate.class);
-	this.register(0x4, PacketServerEntityEquipment.class);
-	this.register(0x5, PacketServerSpawnPosition.class);
-	this.register(0x6, PacketServerUpdateHealth.class);
-	this.register(0x7, PacketServerRespawn.class);
-	this.register(0x9, PacketServerHeldItemChange.class);
+	this.register(0x01, PacketServerJoin.class);
+	this.register(0x02, PacketServerChat.class);
+	this.register(0x03, PacketServerTimeUpdate.class);
+	this.register(0x04, PacketServerEntityEquipment.class);
+	this.register(0x05, PacketServerSpawnPosition.class);
+	this.register(0x06, PacketServerUpdateHealth.class);
+	this.register(0x07, PacketServerRespawn.class);
+	this.register(0x09, PacketServerHeldItemChange.class);
 	this.register(0x0A, PacketServerUserBed.class);
 	this.register(0x0B, PacketServerAnimation.class);
-	
 	this.register(0x29, PacketServerSoundEffect.class);
 	this.register(0x2b, PacketServerChangeGameState.class);
 	this.register(0x2c, PacketServerSpawnGlobalEntity.class);
-	this.register(0x31, PacketServerDifficulty.class);
-
+	this.register(0x39, PacketServerPlayerAbilities.class);
+	this.register(0x3f, PacketServerPluginMessage.class);
+	this.register(0x41, PacketServerDifficulty.class);
     }
 
     @Override

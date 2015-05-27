@@ -8,7 +8,7 @@ import me.lukas81298.mcclient.packets.PacketSerializer;
 
 public class PacketServerHeldItemChange implements Packet {
     
-    private byte slot;
+    private short slot;
 
     @Override
     public void serialize(PacketSerializer serializer) throws IOException {
@@ -16,10 +16,10 @@ public class PacketServerHeldItemChange implements Packet {
 
     @Override
     public void deserialize(PacketDeserializer d) throws IOException {
-	slot = d.readByte();
+	slot = d.readShort();
     }
 
-    public byte getSlot() {
+    public short getSlot() {
 	return slot;
     }
 
