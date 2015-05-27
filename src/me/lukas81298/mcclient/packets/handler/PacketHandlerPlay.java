@@ -7,6 +7,7 @@ import java.util.Map;
 import me.lukas81298.mcclient.packets.Packet;
 import me.lukas81298.mcclient.packets.PacketDeserializer;
 import me.lukas81298.mcclient.packets.ProtocolState;
+import me.lukas81298.mcclient.packets.play.server.PacketServerAnimation;
 import me.lukas81298.mcclient.packets.play.server.PacketServerChangeGameState;
 import me.lukas81298.mcclient.packets.play.server.PacketServerDifficulty;
 import me.lukas81298.mcclient.packets.play.server.PacketServerEntityEquipment;
@@ -19,6 +20,7 @@ import me.lukas81298.mcclient.packets.play.server.PacketServerSpawnGlobalEntity;
 import me.lukas81298.mcclient.packets.play.server.PacketServerSpawnPosition;
 import me.lukas81298.mcclient.packets.play.server.PacketServerTimeUpdate;
 import me.lukas81298.mcclient.packets.play.server.PacketServerUpdateHealth;
+import me.lukas81298.mcclient.packets.play.server.PacketServerUserBed;
 
 public class PacketHandlerPlay implements PacketHandler {
 
@@ -28,6 +30,7 @@ public class PacketHandlerPlay implements PacketHandler {
     public boolean handlePacket(int packetId, PacketDeserializer d) throws IOException {
 	try {
 	    Packet packet = getPacket(packetId);
+	    System.out.println(packet.getClass().getName());
 	} catch (InstantiationException e) {
 	    e.printStackTrace();
 	} catch (IllegalAccessException e) {
@@ -49,6 +52,9 @@ public class PacketHandlerPlay implements PacketHandler {
 	this.register(0x6, PacketServerUpdateHealth.class);
 	this.register(0x7, PacketServerRespawn.class);
 	this.register(0x9, PacketServerHeldItemChange.class);
+	this.register(0x0A, PacketServerUserBed.class);
+	this.register(0x0B, PacketServerAnimation.class);
+	
 	this.register(0x29, PacketServerSoundEffect.class);
 	this.register(0x2b, PacketServerChangeGameState.class);
 	this.register(0x2c, PacketServerSpawnGlobalEntity.class);
@@ -66,7 +72,7 @@ public class PacketHandlerPlay implements PacketHandler {
     }
     
     public Packet getPacket(int packetId) throws InstantiationException, IllegalAccessException, RuntimeException {
-	if(this.packets.containsKey(packetId)) {
+	if(!this.packets.containsKey(packetId)) {
 	    throw new RuntimeException("Illegal packet " + packetId);
 	}
 	return this.packets.get(packetId).newInstance();

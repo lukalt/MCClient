@@ -14,6 +14,10 @@ public class PacketServerKeepAlive implements Packet {
 	super();
 	this.keepAliveId = keepAliveId;
     }
+    
+    public PacketServerKeepAlive() {
+	
+    }
 
     public int getKeepAliveId() {
 	return keepAliveId;
