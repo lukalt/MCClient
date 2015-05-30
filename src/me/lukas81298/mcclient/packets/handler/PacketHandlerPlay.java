@@ -4,27 +4,34 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.lukas81298.mcclient.MCClient;
 import me.lukas81298.mcclient.packets.Packet;
 import me.lukas81298.mcclient.packets.PacketDeserializer;
 import me.lukas81298.mcclient.packets.ProtocolState;
 import me.lukas81298.mcclient.packets.play.server.PacketServerAnimation;
+import me.lukas81298.mcclient.packets.play.server.PacketServerCamera;
 import me.lukas81298.mcclient.packets.play.server.PacketServerChangeGameState;
 import me.lukas81298.mcclient.packets.play.server.PacketServerChat;
+import me.lukas81298.mcclient.packets.play.server.PacketServerCombatEvent;
 import me.lukas81298.mcclient.packets.play.server.PacketServerDifficulty;
 import me.lukas81298.mcclient.packets.play.server.PacketServerEntityEquipment;
+import me.lukas81298.mcclient.packets.play.server.PacketServerEntityStatus;
+import me.lukas81298.mcclient.packets.play.server.PacketServerHeaderFooter;
 import me.lukas81298.mcclient.packets.play.server.PacketServerHeldItemChange;
 import me.lukas81298.mcclient.packets.play.server.PacketServerJoin;
 import me.lukas81298.mcclient.packets.play.server.PacketServerKeepAlive;
 import me.lukas81298.mcclient.packets.play.server.PacketServerPlayerAbilities;
 import me.lukas81298.mcclient.packets.play.server.PacketServerPluginMessage;
+import me.lukas81298.mcclient.packets.play.server.PacketServerResourcePackSend;
 import me.lukas81298.mcclient.packets.play.server.PacketServerRespawn;
+import me.lukas81298.mcclient.packets.play.server.PacketServerSetCompression;
 import me.lukas81298.mcclient.packets.play.server.PacketServerSoundEffect;
 import me.lukas81298.mcclient.packets.play.server.PacketServerSpawnGlobalEntity;
 import me.lukas81298.mcclient.packets.play.server.PacketServerSpawnPosition;
 import me.lukas81298.mcclient.packets.play.server.PacketServerTimeUpdate;
+import me.lukas81298.mcclient.packets.play.server.PacketServerTitle;
 import me.lukas81298.mcclient.packets.play.server.PacketServerUpdateHealth;
 import me.lukas81298.mcclient.packets.play.server.PacketServerUserBed;
+import me.lukas81298.mcclient.packets.play.server.PacketServerWorldBorder;
 
 public class PacketHandlerPlay implements PacketHandler {
 
@@ -34,13 +41,13 @@ public class PacketHandlerPlay implements PacketHandler {
     public boolean handlePacket(int packetId, PacketDeserializer d) throws IOException {
 	try {
 	    Packet packet = getPacket(packetId);
+	    packet.deserialize(d);
 	    System.out.println(packet.getClass().getName());
 	} catch (InstantiationException e) {
 	    e.printStackTrace();
 	} catch (IllegalAccessException e) {
 	    e.printStackTrace();
 	} catch (RuntimeException e) {
-	    e.printStackTrace();
 	    System.out.println("0x" + Integer.toHexString(packetId) + " received.");
 	    return false;
 	}
@@ -59,12 +66,20 @@ public class PacketHandlerPlay implements PacketHandler {
 	this.register(0x09, PacketServerHeldItemChange.class);
 	this.register(0x0A, PacketServerUserBed.class);
 	this.register(0x0B, PacketServerAnimation.class);
+	this.register(0x1A, PacketServerEntityStatus.class);
 	this.register(0x29, PacketServerSoundEffect.class);
 	this.register(0x2b, PacketServerChangeGameState.class);
 	this.register(0x2c, PacketServerSpawnGlobalEntity.class);
 	this.register(0x39, PacketServerPlayerAbilities.class);
 	this.register(0x3f, PacketServerPluginMessage.class);
 	this.register(0x41, PacketServerDifficulty.class);
+	this.register(0x42, PacketServerCombatEvent.class);
+	this.register(0x43, PacketServerCamera.class);
+	this.register(0x44, PacketServerWorldBorder.class);
+	this.register(0x45, PacketServerTitle.class);
+	this.register(0x46, PacketServerSetCompression.class);
+	this.register(0x47, PacketServerHeaderFooter.class);
+	this.register(0x48, PacketServerResourcePackSend.class);
     }
 
     @Override

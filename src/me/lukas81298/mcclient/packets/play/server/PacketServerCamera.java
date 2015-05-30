@@ -6,9 +6,9 @@ import me.lukas81298.mcclient.packets.Packet;
 import me.lukas81298.mcclient.packets.PacketDeserializer;
 import me.lukas81298.mcclient.packets.PacketSerializer;
 
-public class PacketServerHeldItemChange implements Packet {
-    
-    private byte slot;
+public class PacketServerCamera implements Packet {
+
+    private int cameraId;
 
     @Override
     public void serialize(PacketSerializer serializer) throws IOException {
@@ -16,15 +16,20 @@ public class PacketServerHeldItemChange implements Packet {
 
     @Override
     public void deserialize(PacketDeserializer d) throws IOException {
-	slot = d.readByte();
+	this.cameraId = d.readVarInt();
     }
 
-    public byte getSlot() {
-	return slot;
+    public int getCameraId() {
+	return cameraId;
+    }
+
+    public void setCameraId(int cameraId) {
+	this.cameraId = cameraId;
     }
 
     @Override
     public int getPacketId() {
-	return 0x09;
+	return 0x43;
     }
+
 }

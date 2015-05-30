@@ -94,7 +94,7 @@ public class PacketDeserializer {
     public boolean readBoolean() throws IOException {
 	return this.dataIn.readBoolean();
     }
-    
+
     public int readUnsignedByte() throws IOException {
 	return this.dataIn.readUnsignedByte();
     }
@@ -110,4 +110,21 @@ public class PacketDeserializer {
     public float readFloat() throws IOException {
 	return this.dataIn.readFloat();
     }
-} 
+
+    public long readVarLong() {
+	long var1 = 0L;
+	int var3 = 0;
+	byte var4;
+
+	do {
+	    var4 = this.readByte();
+	    var1 |= (long) (var4 & 127) << var3++ * 7;
+
+	    if (var3 > 10) {
+		throw new RuntimeException("VarLong too big");
+	    }
+	} while ((var4 & 128) == 128);
+
+	return var1;
+    }
+}

@@ -117,7 +117,6 @@ public class MCClient {
 			PacketDeserializer dataWrapper = new PacketDeserializer(new DataInputStream(new ByteArrayInputStream(packetData)));
 
 			if (!readPacket(packetId, dataWrapper)) {
-			    input.skipBytes(packetDataLength);
 			    System.out.println("Received Packet: x0" + Integer.toHexString(packetId) + " with length " + rawLength + "; skipping " + packetDataLength);
 			} else {
 			    System.out.println("Handled Packet: x0" + Integer.toHexString(packetId) + " with length " + rawLength);
